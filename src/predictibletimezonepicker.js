@@ -12,7 +12,7 @@
 
   var pluginName = "zonePicker",
   		defaults = {
-  		propertyName: "value"
+  		idFormat: "number"
   };
 
   // The actual plugin constructor
@@ -21,18 +21,25 @@
   		this.settings = $.extend( {}, defaults, options );
   		this._defaults = defaults;
   		this._name = pluginName;
+      this.format = {};
+      this.format.number = function(zone) {
+          return zone.offset;
+      };
+      this.format.name = function(zone) {
+          return zone.name;
+      };
   		this.init();
   }
 
   $.extend(ZonePicker.prototype, {
   		init: function () {
+        var currentZone = this.predict();
         var zones = [];
         $.each(_.jstz.olson.timezones, function(i,n) {
           zones.push({'offset': parseInt(i)/60, 'name':n});
         });
 
-        this.element.data("zone", this.predict().name());
-  			console.log("moment");
+        this.element.data("zone", currentZone.name());
   		},
   		predict: function () {
   			return _.jstz.determine();

@@ -5,7 +5,10 @@
  * Copyright (c) 2015 Pavel Polivka
  * Licensed under the MIT license.
  */
+
 (function ($) {
+
+  var _ = require('jstimezonedetect');
 
   var pluginName = "zonePicker",
   		defaults = {
@@ -14,7 +17,7 @@
 
   // The actual plugin constructor
   function ZonePicker (element, options) {
-  		this.element = element;
+  		this.element = $(element);
   		this.settings = $.extend( {}, defaults, options );
   		this._defaults = defaults;
   		this._name = pluginName;
@@ -23,10 +26,16 @@
 
   $.extend(ZonePicker.prototype, {
   		init: function () {
-  				console.log("xD");
+        var zones = [];
+        $.each(_.jstz.olson.timezones, function(i,n) {
+          zones.push({'offset': parseInt(i)/60, 'name':n});
+        });
+
+        this.element.data("zone", this.predict().name());
+  			console.log("moment");
   		},
-  		predict: function (date) {
-  				console.log(date);
+  		predict: function () {
+  			return _.jstz.determine();
   		}
   });
 

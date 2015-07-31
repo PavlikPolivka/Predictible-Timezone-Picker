@@ -2,6 +2,7 @@
 module.exports = function (grunt) {
   // Load all grunt tasks
   require('load-grunt-tasks')(grunt);
+  grunt.loadNpmTasks('grunt-browserify');
   // Show elapsed time at the end
   require('time-grunt')(grunt);
 
@@ -16,7 +17,11 @@ module.exports = function (grunt) {
       ' Licensed MIT */\n',
     // Task configuration.
     clean: {
-      files: ['dist']
+      full: [ 'full/*.js' ],
+      dist: [ 'dist/*.js' ]
+    },
+    browserify: {
+      'full/<%= pkg.name %>.js': ['src/<%= pkg.name %>.js']
     },
     concat: {
       options: {
@@ -24,7 +29,7 @@ module.exports = function (grunt) {
         stripBanners: true
       },
       dist: {
-        src: ['src/<%= pkg.name %>.js'],
+        src: ['full/<%= pkg.name %>.js'],
         dest: 'dist/jquery.<%= pkg.name %>.js'
       }
     },
@@ -74,7 +79,7 @@ module.exports = function (grunt) {
       },
       src: {
         files: '<%= jshint.src.src %>',
-        tasks: ['jshint:src', 'qunit']
+        tasks: ['clean:full', 'browserify', 'jshint:src', 'qunit']
       },
       test: {
         files: '<%= jshint.test.src %>',
@@ -92,11 +97,11 @@ module.exports = function (grunt) {
   });
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'connect', 'qunit', 'clean', 'concat', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'connect', 'clean:full', 'browserify', 'qunit', 'clean:dist', 'concat', 'uglify']);
   grunt.registerTask('server', function () {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
   });
   grunt.registerTask('serve', ['connect', 'watch']);
-  grunt.registerTask('test', ['jshint', 'connect', 'qunit']);
+  grunt.registerTask('test', ['jshint', 'connect', 'clean:full', 'browserify', 'qunit']);
 };

@@ -73,7 +73,7 @@ Usage of custom function:
 
 Zone object only has info about name of zone and number (offset of the zone).
 
-```json
+```javascript
 {
 	'offset' : '-5',
 	'name' : 'America/New_York'

@@ -7,8 +7,8 @@
 
 Download the [production version][min] or the [development version][max].
 
-[min]: https://raw.githubusercontent.com/PavlikPolivka/jquery-predictibletimezonepicker/master/dist/jquery.predictibletimezonepicker.min.js
-[max]: https://raw.githubusercontent.com/PavlikPolivka/jquery-predictibletimezonepicker/master/dist/jquery.predictibletimezonepicker.js
+[min]: https://raw.githubusercontent.com/PavlikPolivka/Predictible-Timezone-Picker/master/dist/jquery.predictibletimezonepicker.min.js
+[max]: https://raw.githubusercontent.com/PavlikPolivka/Predictible-Timezone-Picker/master/dist/jquery.predictibletimezonepicker.js
 
 In your web page:
 
